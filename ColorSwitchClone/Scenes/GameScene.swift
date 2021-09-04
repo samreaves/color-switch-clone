@@ -9,21 +9,21 @@ import SpriteKit
 
 enum PlayColors {
     static let colors = [
-        UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1.0),
-        UIColor(red: 241/255, green: 196/255, blue: 15/255, alpha: 1.0),
-        UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1.0),
-        UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1.0)
+        UIColor.blue,
+        UIColor.red,
+        UIColor.yellow,
+        UIColor.green
     ]
 }
 
 enum SwitchState: Int {
-    case red, yellow, green, blue
+    case blue, red, yellow, green
 }
 
 class GameScene: SKScene {
     
     var colorSwitch: SKSpriteNode!
-    var switchState: SwitchState = SwitchState.red
+    var switchState: SwitchState = SwitchState.blue
     var currentColorIndex: Int?
     
     override func didMove(to view: SKView) {
@@ -67,7 +67,7 @@ class GameScene: SKScene {
         if let newState = SwitchState(rawValue: switchState.rawValue + 1) {
             switchState = newState
         } else {
-            switchState = .red
+            switchState = .blue
         }
         
         colorSwitch.run(SKAction.rotate(byAngle: .pi / 2, duration: 0.25))
@@ -88,6 +88,8 @@ extension GameScene: SKPhysicsContactDelegate {
         
         if (contactMask == PhysicsCategories.switchCategory | PhysicsCategories.ballCategory) {
             if let ball = contact.bodyA.node?.name == "ball" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
+                print(currentColorIndex!)
+                print(switchState.rawValue)
                 if (currentColorIndex == switchState.rawValue) {
                     ball.run(SKAction.fadeOut(withDuration: 0.25), completion: {
                         ball.removeFromParent()

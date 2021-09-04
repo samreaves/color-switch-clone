@@ -88,8 +88,6 @@ extension GameScene: SKPhysicsContactDelegate {
         
         if (contactMask == PhysicsCategories.switchCategory | PhysicsCategories.ballCategory) {
             if let ball = contact.bodyA.node?.name == "ball" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
-                print(currentColorIndex!)
-                print(switchState.rawValue)
                 if (currentColorIndex == switchState.rawValue) {
                     ball.run(SKAction.fadeOut(withDuration: 0.25), completion: {
                         ball.removeFromParent()

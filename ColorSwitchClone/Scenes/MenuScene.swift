@@ -47,13 +47,13 @@ class MenuScene: SKScene {
         self.playLabel = playLabel
         addChild(playLabel)
         
-        let highScoreLabel = SKLabelNode(text: "High Score: ")
+        let highScoreLabel = SKLabelNode(text: "High Score: \(UserDefaults.standard.integer(forKey: "highScore"))")
         highScoreLabel.fontName = fontName
         highScoreLabel.fontSize = 30.0
         highScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - highScoreLabel.frame.size.height * 4)
         addChild(highScoreLabel)
 
-        let lastScoreLabel = SKLabelNode(text: "Last Score: ")
+        let lastScoreLabel = SKLabelNode(text: "Last Score: \(UserDefaults.standard.integer(forKey: "lastScore"))")
         lastScoreLabel.fontName = fontName
         lastScoreLabel.fontSize = 30.0
         lastScoreLabel.position = CGPoint(x: frame.midX, y: highScoreLabel.position.y - lastScoreLabel.frame.size.height * 2)

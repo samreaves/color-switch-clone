@@ -88,9 +88,12 @@ class GameScene: SKScene {
     }
     
     func gameOver() {
-        print("Game over")
-        score = 0
-        scoreLabel.text = "\(score)"
+        UserDefaults.standard.setValue(score, forKey: "lastScore")
+        if (score) > UserDefaults.standard.integer(forKey: "highScore") {
+            UserDefaults.standard.setValue(score, forKey: "highScore")
+        }
+        let menuScene = MenuScene(size: view!.bounds.size)
+        view?.presentScene(menuScene)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

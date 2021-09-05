@@ -10,7 +10,6 @@ import SpriteKit
 class MenuScene: SKScene {
     
     let fontName = "AvenirNext-Bold"
-    var playLabel: SKLabelNode?
 
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 44/255, green: 62/255, blue: 80/255, alpha: 1.0)
@@ -41,24 +40,32 @@ class MenuScene: SKScene {
     func addLabels() {
         let playLabel = SKLabelNode(text: "Tap to Play")
         playLabel.fontName = fontName
-        playLabel.fontSize = 50.0
+        playLabel.fontSize = 40.0
         playLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         playLabel.name = "playLabel"
-        self.playLabel = playLabel
         addChild(playLabel)
+        animateLabel(label: playLabel)
         
         let highScoreLabel = SKLabelNode(text: "High Score: \(UserDefaults.standard.integer(forKey: "highScore"))")
         highScoreLabel.fontName = fontName
-        highScoreLabel.fontSize = 30.0
+        highScoreLabel.fontSize = 26.0
         highScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - highScoreLabel.frame.size.height * 4)
         addChild(highScoreLabel)
 
         let lastScoreLabel = SKLabelNode(text: "Last Score: \(UserDefaults.standard.integer(forKey: "lastScore"))")
         lastScoreLabel.fontName = fontName
-        lastScoreLabel.fontSize = 30.0
+        lastScoreLabel.fontSize = 26.0
         lastScoreLabel.position = CGPoint(x: frame.midX, y: highScoreLabel.position.y - lastScoreLabel.frame.size.height * 2)
         addChild(lastScoreLabel)
     }
+    
+    func animateLabel(label: SKLabelNode) {
+        let scaleUp = SKAction.scale(by: 1.05, duration: 0.82)
+        let scaleDown = SKAction.scale(by: 0.95, duration: 0.82)
+        let sequence = SKAction.sequence([scaleUp, scaleDown])
+        label.run(SKAction.repeatForever(sequence))
+    }
+                    
     
     func startGame() {
         let gameScene = GameScene(size: view!.bounds.size)

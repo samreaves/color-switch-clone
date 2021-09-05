@@ -25,6 +25,9 @@ class GameScene: SKScene {
     var colorSwitch: SKSpriteNode!
     var switchState: SwitchState = SwitchState.blue
     var currentColorIndex: Int?
+
+    let scoreLabel = SKLabelNode(text: "0")
+    var score = 0
     
     override func didMove(to view: SKView) {
         setupPhysics()
@@ -45,6 +48,12 @@ class GameScene: SKScene {
         colorSwitch.physicsBody?.categoryBitMask = PhysicsCategories.switchCategory
         colorSwitch.physicsBody?.isDynamic = false
         addChild(colorSwitch)
+        
+        scoreLabel.fontName = "AvenirNext-Bold"
+        scoreLabel.fontSize = 60.0
+        scoreLabel.fontColor = UIColor.white
+        scoreLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(scoreLabel)
         
         spawnBall()
     }
@@ -75,6 +84,8 @@ class GameScene: SKScene {
     
     func gameOver() {
         print("Game over")
+        score = 0
+        scoreLabel.text = "\(score)"
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -91,6 +102,8 @@ extension GameScene: SKPhysicsContactDelegate {
                 if (currentColorIndex == switchState.rawValue) {
                     ball.run(SKAction.fadeOut(withDuration: 0.25), completion: {
                         ball.removeFromParent()
+                        self.score += 1
+                        self.scoreLabel.text = "\(self.score)"
                         self.spawnBall()
                     })
                 } else {
